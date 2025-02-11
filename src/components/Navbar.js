@@ -5,6 +5,7 @@ import './Navbar.css';
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +41,7 @@ const Navbar = () => {
       });
     }
     setActiveSection(sectionId);
+    setIsMenuOpen(false);
   };
 
   return (
@@ -57,11 +59,18 @@ const Navbar = () => {
         >
           DM
         </motion.div>
+
+        <div className="menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div className={`bar ${isMenuOpen ? 'change' : ''}`}></div>
+          <div className={`bar ${isMenuOpen ? 'change' : ''}`}></div>
+          <div className={`bar ${isMenuOpen ? 'change' : ''}`}></div>
+        </div>
+
         <motion.div 
-          className="nav-links"
+          className={`nav-links ${isMenuOpen ? 'open' : ''}`}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          animate={{ opacity: isMenuOpen ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
         >
           {['home', 'about', 'projects', 'contact'].map((section) => (
             <motion.button
